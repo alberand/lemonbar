@@ -9,7 +9,7 @@ class Widget:
     Abstrac class for all lemonbar widgets.
     '''
 
-    def __init__(self):
+    def __init__(self, name):
         '''
         Params:
             bg: background color
@@ -18,6 +18,9 @@ class Widget:
             icon_p: position of the icon. 0 to the left of the text, 1 to the
             right of the text.
         '''
+        # Temp
+        self.name = name
+
         self.bg = colors['c_background']
         self.fg = colors['c_white']
         self.icon = icons['laptop']
@@ -41,4 +44,4 @@ class Widget:
         '''
         Returns generated string for lemonbar.
         '''
-        return ' Widget =) '
+        return ' {} '.format(self.name)
