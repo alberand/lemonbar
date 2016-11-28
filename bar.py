@@ -42,7 +42,7 @@ class Bar:
     def gen_widget_container(self, widget, pos, order=None):
         container = {
                 'widget': widget,
-                'order': order,
+                'align': order,
                 'position': pos
         }
 
@@ -69,19 +69,37 @@ class Bar:
             print('Position is incorrect. Should be in range 0 - 2.')
             return None
 
+    def find_last_position(self, pos, align):
+        if not align in ['l', 'c', 'r']:
+            return None
 
-    def add_widget(self, widget, pos=None, order=None):
+        for cont in self.widgets:
+            if cont['align'] != align:
+                continue
+            else:
+                return cont['position'] + pos
+
+        return pos
+
+    def add_widget(self, widget, align=None, pos=None):
         '''
         Args:
             widget: widget.Widget instance
-            pos: position of the widget. 0 - left, 1 - center, 2 - right
-            order: order id of the widget
+            pos: position of the widget in the align position. 
+            align: order id of the widget. 'l' - left, 'c' - center, 'r' - right
         '''
-        if not order:
-            order = self.find_last_order(pos) + 1
+        if not align:
+            align = 'r'
 
-        cont = self.gen_widget_container(widget, pos, order)
-        self.widgets.insert(order, cont)
+        if pos == None:
+            pos = len(self.widgets)
+        else:
+            pos = self.find_last_position(pos, align)
+            print(pos)
+
+        cont = self.gen_widget_container(widget, pos, align)
+
+        self.widgets.insert(pos, cont)
 
     def remove_widget(self, widget):
         # TODO update widgets order
@@ -93,20 +111,19 @@ class Bar:
 
     def get_output(self):
         container = '%{{l}}{0} %{{c}}{1} %{{r}}{2}'
-        pos_items = {
-                'left': [],
-                'center': [],
-                'right': []
+        arranged_items = {
+                'l': [],
+                'c': [],
+                'r': []
         }
 
         for cont in self.widgets:
-            cont['widget']
+            arranged_items[cont['align']].append(cont['widget'].get_output())
 
         result = container.format(
-            pos_items
-        )
-        result = delimeter.join(
-                [wid['widget'].get_output() for wid in self.widgets])
+                ''.join(arranged_items['l']), 
+                ''.join(arranged_items['c']),
+                ''.join(arranged_items['r']))
 
         return result
 
@@ -116,15 +133,18 @@ if __name__ == '__main__':
     bar.set_timeout(2)
 
     # Create widgets
-    a_wid = Widget('alpha')
-    b_wid = Widget('beta')
-    c_wid = Widget('gamma')
-    d_wid = Widget('theta')
+    a_wid = Widget('a')
+    b_wid = Widget('b')
+    c_wid = Widget('c')
+    d_wid = Widget('d')
+    e_wid = Widget('e')
 
     # Add widgets to the bar
     bar.add_widget(a_wid)
-    bar.add_widget(c_wid)
-    bar.add_widget(b_wid)
+    bar.add_widget(b_wid, 'c', 0)
+    bar.add_widget(c_wid, 'r', 0)
+    bar.add_widget(d_wid, 'l', 0)
+    bar.add_widget(e_wid, 'r', 0)
 
     # Run mainloop
     bar.run()
