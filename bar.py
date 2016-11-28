@@ -14,6 +14,8 @@ class Bar:
         self.timeout = 10
         self.running = True
 
+        self.position_offsets = [0, 0]
+
     def run(self):
         while self.running:
             print(self.get_output())
@@ -79,7 +81,7 @@ class Bar:
             else:
                 return cont['position'] + pos
 
-        return pos
+        return self.position_offsets[0] if align == 'c' else self.position_offsets[1]
 
     def add_widget(self, widget, align=None, pos=None):
         '''
@@ -88,21 +90,27 @@ class Bar:
             pos: position of the widget in the align position. 
             align: order id of the widget. 'l' - left, 'c' - center, 'r' - right
         '''
-        if not align:
+        # Check align
+        if not align or not align in ['l', 'c', 'r']:
             align = 'r'
 
+        # Check position
         if pos == None:
             pos = len(self.widgets)
+        elif pos > len(self.widgets) or not isinstance(pos, int):
+            return None
         else:
             pos = self.find_last_position(pos, align)
-            print(pos)
+
+        self.position_offsets[0 if align == 'c' else 1] += 1
 
         cont = self.gen_widget_container(widget, pos, align)
-
         self.widgets.insert(pos, cont)
 
     def remove_widget(self, widget):
         # TODO update widgets order
+        self.position_offsets[0 if align == 'c' else 1] -= 1
+
         self.widgets.remove(widget)
 
     # External communications
