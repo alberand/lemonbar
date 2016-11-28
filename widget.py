@@ -38,10 +38,23 @@ class Widget:
         '''
         Implement if widget should execute any aciont, commands, programs...
         '''
-        pass
+
+    def set_action(self, string)
+        return '%{{A{1}:{2}:}}{0}%{{A}}'.format(string, button, action)
+
+    def set_bg(self, string):
+        return '%{{B{1}}}{0}%{{B{1}}}'.format(string, self.bg)
+
+    def set_fg(self, string):
+        return '%{{F{1}}}{0}%{{F{1}}}'.format(string, self.fg)
 
     def get_output(self):
         '''
         Returns generated string for lemonbar.
         '''
-        return ' {} '.format(self.name)
+        return self.set_fg(' {} '.format(self.name))
+
+if __name__ == '__main__':
+    a = Widget('a')
+
+    print(a.get_output())
