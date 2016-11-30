@@ -1,0 +1,11 @@
+#!/bin/bash
+
+wget -q --tries=10 --timeout=20 -O - http://google.com > /dev/null
+
+if [[ $? -eq 0 ]]; then
+    # Online
+    exit 1
+else
+    # Offline
+    exit 0
+fi
