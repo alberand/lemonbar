@@ -22,6 +22,7 @@ class Widget:
         self.bg = colors['c_background']
         self.fg = colors['c_white']
         self.icon = icons['laptop']
+        self.gaps = (5, 5)
 
         self.colors_rules = dict()
         self.action = []
@@ -65,6 +66,10 @@ class Widget:
     def set_fg(self, string):
         return '%{{F{1}}}{0}%{{F{1}}}'.format(string, self.fg)
 
+    def set_gaps(self, string):
+        return '%{{O{0}}}{1}%{{O{2}}}'.format(self.gaps[0], string, 
+                self.gaps[1])
+
     def get_action(self, string):
         for cmd, button in zip(self.action, self.action_buttons):
             string = self.set_action(string, cmd, button)
@@ -85,6 +90,9 @@ class Widget:
             
         if self.fg:
             string = self.set_fg(string)
+
+        if self.gaps:
+            string = self.set_gaps(string)
 
         if len(self.action):
             string = self.get_action(string)
