@@ -2,7 +2,7 @@
 
 import datetime
 from widgets.widget import Widget
-from config import colors, icons
+from widgets.config import colors, icons
 
 class Date(Widget):
     '''

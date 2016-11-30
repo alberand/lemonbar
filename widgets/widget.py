@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from config import colors, icons
+from widgets.config import colors, icons
 
 # TODO properties instead of GETs/SETs
 
