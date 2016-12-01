@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import time
 from widget import Widget
 
@@ -19,10 +20,34 @@ class Bar:
     def run(self):
         while self.running:
             print(self.get_output())
+
+            cmd = self.get_cmds()
+            if cmd:
+                self.process_cmd(cmd)
+
             time.sleep(self.timeout)
 
     def stop(self):
         self.running = False
+
+    def process_cmd(self):
+        pass
+
+    def read_cmd(self):
+        '''
+        Check if there is something in the sys.stdin buffer. If yes read it.
+        '''
+        cmd = ''
+        if select.select([sys.stdin,], [], [], 0.0)[0]:
+            while True:
+                char = sys.stdin.read(1)
+                if char == '\n':
+                    break
+                cmd += char
+
+            sys.stdin.flush()
+
+        return cmd
 
     # Bar configuration
     def set_timeout(self, timeout):

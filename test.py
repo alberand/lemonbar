@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+import sys
+import time
+import select 
 import datetime
+
 from widgets.date import Date
 from widgets.internet import Internet
-import time
-import sys
 
 if __name__ == '__main__':
     # a = Widget('a')
@@ -18,15 +20,29 @@ if __name__ == '__main__':
     # print(b.get_output())
     i = 0
     date = 'Sunday'
+    cmd = ''
     while True:
-        print("%{A:date:}%{F#FFFFFF} " + date + " Click here to reboot " + str(i) + " %{F#FFFFFF}%{A}")
+        print("%{A:date:}%{F#FF0000} " + date + "  %{F#FF0000}%{A}", end='')
+        print("%{A:date:}%{F#FFFFFF} Click here to reboot " + str(i) + " %{F#FFFFFF}%{A}", end='')
+        print("%{A:time:}%{F#FFFFFF} Click here for time " + str(i) + " %{F#FFFFFF}%{A}")
         i += 1
-        # print("%{O5}%{F#ffb8bb26}%{B#ff282828}  %{B#ff282828}%{F#ffb8bb26}%{O5}")
         sys.stdout.flush()
+        
+        if select.select([sys.stdin,], [], [], 0.0)[0]:
+            while True:
+                char = sys.stdin.read(1)
+                if char == '\n':
+                    break
+                cmd += char
 
-        # if sys.stdin.read() == 'date':
-            # print('Fuck off. Today is monday.')
-            # date = 'Monday'
-        print(input())
 
-        time.sleep(1)
+            sys.stdin.flush()
+
+            if cmd == 'date':
+                date = 'Monday'
+            if cmd == 'time':
+                date = str(datetime.datetime.today())
+
+            cmd = ''
+
+        time.sleep(0.1)
