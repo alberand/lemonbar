@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import sys
+from random import randint
+
 from widgets.config import colors, icons
 
 # TODO properties instead of GETs/SETs
@@ -18,6 +21,8 @@ class Widget:
         '''
         # Temp
         self.value = value
+        self.id = randint(0, 100)
+        print('Widget ID: {}.'.format(self.id), file=sys.stderr)
 
         self.bg = colors['c_background']
         self.fg = colors['c_white']
@@ -34,7 +39,16 @@ class Widget:
         TO IMPLEMENT.
 
         '''
-        pass
+        return str(self.value)
+
+    def execute(self, cmd):
+        '''
+
+        TO IMPLEMENT.
+
+        '''
+        print('Widget {} executing "{}".'.format(self.id, cmd), file=sys.stderr)
+
 
     def add_action(self, button, cmd):
         '''
@@ -50,7 +64,7 @@ class Widget:
         if not button in range(1, 6):
             return None
 
-        self.action.append(cmd)
+        self.action.append('{}_{}'.format(self.id, cmd))
         self.action_buttons.append(button)
 
     def remove_action(self, cmd):

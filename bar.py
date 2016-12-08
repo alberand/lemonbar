@@ -2,7 +2,9 @@
 
 import sys
 import time
-from widget import Widget
+import select 
+
+from widgets.widget import Widget
 
 class Bar:
     '''
@@ -20,18 +22,30 @@ class Bar:
     def run(self):
         while self.running:
             print(self.get_output())
+            sys.stdout.flush()
 
-            cmd = self.get_cmds()
+            cmd = self.read_cmd()
             if cmd:
                 self.process_cmd(cmd)
+
+            sys.stdin.flush()
 
             time.sleep(self.timeout)
 
     def stop(self):
         self.running = False
 
-    def process_cmd(self):
-        pass
+    def process_cmd(self, cmd):
+        if not len(cmd):
+            return False
+
+        widget_id = cmd[0:2]
+
+        # Find widget.
+        for cont in self.widgets:
+            if cont['id'] == int(widget_id):
+                cont['widget'].execute(cmd)
+        # print('cmd "{}" executed'.format(cmd), file=sys.stderr)
 
     def read_cmd(self):
         '''
@@ -70,7 +84,8 @@ class Bar:
         container = {
                 'widget': widget,
                 'align': order,
-                'position': pos
+                'position': pos,
+                'id': widget.id
         }
 
         return container
@@ -163,7 +178,7 @@ class Bar:
 if __name__ == '__main__':
     # Init the bar
     bar = Bar()
-    bar.set_timeout(2)
+    bar.set_timeout(0.1)
 
     # Create widgets
     a_wid = Widget('a')
@@ -171,6 +186,10 @@ if __name__ == '__main__':
     c_wid = Widget('c')
     d_wid = Widget('d')
     e_wid = Widget('e')
+
+    a_wid.add_action(1, 'hello')
+    b_wid.add_action(1, 'date')
+    c_wid.add_action(1, 'time')
 
     # Add widgets to the bar
     bar.add_widget(a_wid)
