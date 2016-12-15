@@ -3,8 +3,12 @@
 import sys
 import time
 import select 
+import threading 
+
+import i3ipc
 
 from widgets.widget import Widget
+from widgets.date import Date
 
 class Bar:
     '''
@@ -16,21 +20,31 @@ class Bar:
         self.widgets = list()
         self.timeout = 10
         self.running = True
+        self.i3 = i3ipc.Connection()
+
+        self.i3.on('window::focus', lambda i3, event: self.update())
+
+        self.i3_loop = threading.Thread(target=self.i3.main)
+        self.i3_loop.start()
 
         self.position_offsets = [0, 0]
 
     def run(self):
         while self.running:
-            print(self.get_output())
-            sys.stdout.flush()
-
-            cmd = self.read_cmd()
-            if cmd:
-                self.process_cmd(cmd)
-
-            sys.stdin.flush()
+            self.update()
 
             time.sleep(self.timeout)
+
+    def update(self):
+        print('Updating.', file=sys.stderr)
+        print(self.get_output())
+        sys.stdout.flush()
+
+        cmd = self.read_cmd()
+        if cmd:
+            self.process_cmd(cmd)
+
+        sys.stdin.flush()
 
     def stop(self):
         self.running = False
@@ -44,7 +58,7 @@ class Bar:
         # Find widget.
         for cont in self.widgets:
             if cont['id'] == int(widget_id):
-                cont['widget'].execute(cmd)
+                cont['widget'].execute(cmd[3:])
         # print('cmd "{}" executed'.format(cmd), file=sys.stderr)
 
     def read_cmd(self):
@@ -178,17 +192,17 @@ class Bar:
 if __name__ == '__main__':
     # Init the bar
     bar = Bar()
-    bar.set_timeout(0.1)
+    bar.set_timeout(1)
 
     # Create widgets
     a_wid = Widget('a')
-    b_wid = Widget('b')
+    b_wid = Date('b')
     c_wid = Widget('c')
     d_wid = Widget('d')
     e_wid = Widget('e')
 
     a_wid.add_action(1, 'hello')
-    b_wid.add_action(1, 'date')
+    b_wid.add_action(1, 'event')
     c_wid.add_action(1, 'time')
 
     # Add widgets to the bar
