@@ -94,9 +94,7 @@ class Widget:
         '''
         Returns generated string for lemonbar.
         '''
-        val = self.update() 
-        if val:
-            self.value = val
+        self.update() 
 
         string = ' {} {} '.format(self.icon, self.value)
         if self.bg:

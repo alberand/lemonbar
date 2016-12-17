@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 
+import re
+import sys
 import datetime
+import subprocess
+
 from widgets.widget import Widget
-from config import colors, icons
+from widgets.config import colors, icons
 
 class Temp(Widget):
     '''
@@ -21,8 +25,10 @@ class Temp(Widget):
 
         self.bg = colors['c_background']
         self.fg = colors['c_white']
-        self.icon = icons['clock']
+        self.icon = icons['temp']
         self.gaps = (10, 7)
+        self.temp = 0
+        self.show_text = False
 
         self.colors_rules = dict()
         self.action = []
@@ -40,17 +46,27 @@ class Temp(Widget):
         output = process.communicate()[0]
 
         line = re.findall(r'Physical.*', output.decode('UTF-8'))[0]
-        return 
 
         raw_value = line.split()[3]
 
-        temp = float(raw_value[1:5])
-        if temp < 70:
-            self.fg = colors['c_white'])
-        elif temp < 90:
-            self.fg = colors['c_red_l'])
+        self.temp = float(raw_value[1:5])
+        if self.temp < 70:
+            self.fg = colors['c_white']
+        elif self.temp < 90:
+            self.fg = colors['c_red_l']
         else:
-            self.fg = colors['c_white'])
+            self.fg = colors['c_white']
+
+        if self.show_text:
+            self.value = self.temp
+            self.show_text = False
+        else:
+            self.value = ''
+
+    def execute(self, cmd):
+        print('Widget {} executing "{}".'.format(self.id, cmd), file=sys.stderr)
+        if cmd == 'temp':
+            self.show_text = True
 
 if __name__ == '__main__':
     a = Widget()

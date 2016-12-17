@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import datetime
 from widgets.widget import Widget
 from widgets.config import colors, icons
@@ -35,7 +36,7 @@ class Date(Widget):
         '''
         date = datetime.datetime.now()
 
-        return date.strftime('%a %d.%m.%y %H:%M %p')
+        self.value = date.strftime('%a %d.%m.%y %H:%M %p')
 
 if __name__ == '__main__':
     # a = Widget('a')
