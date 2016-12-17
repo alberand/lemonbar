@@ -3,6 +3,7 @@
 import sys
 from random import randint
 
+from utils import set_f_color, set_b_color, set_spacing, set_icon
 from widgets.config import colors, icons
 
 # TODO properties instead of GETs/SETs
@@ -75,14 +76,13 @@ class Widget:
         return '%{{A{1}:{2}:}}{0}%{{A}}'.format(string, button, action)
 
     def set_bg(self, string):
-        return '%{{B{1}}}{0}%{{B{1}}}'.format(string, self.bg)
+        return set_b_color(string, self.bg)
 
     def set_fg(self, string):
-        return '%{{F{1}}}{0}%{{F{1}}}'.format(string, self.fg)
+        return set_f_color(string, self.fg)
 
     def set_gaps(self, string):
-        return '%{{O{0}}}{1}%{{O{2}}}'.format(self.gaps[0], string, 
-                self.gaps[1])
+        return set_spacing(string, self.gaps)
 
     def get_action(self, string):
         for cmd, button in zip(self.action, self.action_buttons):
@@ -96,7 +96,11 @@ class Widget:
         '''
         self.update() 
 
-        string = ' {} {} '.format(self.icon, self.value)
+        string = self.value
+
+        if self.icon:
+            string = set_icon(string, self.icon)
+
         if self.bg:
             string = self.set_bg(string)
             
