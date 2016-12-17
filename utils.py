@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from utils.config import icons
+from widgets.config import icons
 
 #==============================================================================
 # Files with some useful function for generating output for lemonbar.
@@ -54,6 +54,6 @@ def set_icon(string, icon, position=0):
         string
     '''
     if position:
-        return '{string} {icon}'.format(icon=icons[icon], string=string)
+        return '{string} {icon}'.format(icon=icon, string=string)
     else:
-        return '{icon} {string}'.format(icon=icons[icon], string=string)
+        return '{icon} {string}'.format(icon=icon, string=string)
