@@ -9,6 +9,8 @@ import i3ipc
 
 from widgets.widget import Widget
 from widgets.date import Date
+from widgets.temp import Temp
+from widgets.internet import Internet
 
 class Bar:
     '''
@@ -33,7 +35,7 @@ class Bar:
         while self.running:
             self.update()
 
-            time.sleep(self.timeout)
+            # time.sleep(self.timeout)
 
     def update(self):
         print('Updating.', file=sys.stderr)
@@ -66,7 +68,7 @@ class Bar:
         Check if there is something in the sys.stdin buffer. If yes read it.
         '''
         cmd = ''
-        if select.select([sys.stdin,], [], [], 0.0)[0]:
+        if select.select([sys.stdin,], [], [], self.timeout)[0]:
             while True:
                 char = sys.stdin.read(1)
                 if char == '\n':
@@ -192,25 +194,23 @@ class Bar:
 if __name__ == '__main__':
     # Init the bar
     bar = Bar()
-    bar.set_timeout(1)
+    bar.set_timeout(2)
 
     # Create widgets
-    a_wid = Widget('a')
-    b_wid = Date('b')
-    c_wid = Widget('c')
+    a_wid = Internet()
+    b_wid = Date()
+    c_wid = Temp()
     d_wid = Widget('d')
     e_wid = Widget('e')
 
-    a_wid.add_action(1, 'hello')
-    b_wid.add_action(1, 'event')
-    c_wid.add_action(1, 'time')
+    c_wid.add_action(1, 'temp')
 
     # Add widgets to the bar
-    bar.add_widget(a_wid)
+    bar.add_widget(a_wid, 'r', 0)
+    bar.add_widget(c_wid, 'r', 1)
+    bar.add_widget(e_wid, 'r', 2)
     bar.add_widget(b_wid, 'c', 0)
-    bar.add_widget(c_wid, 'r', 0)
     bar.add_widget(d_wid, 'l', 0)
-    bar.add_widget(e_wid, 'r', 0)
 
     # Run mainloop
     bar.run()
