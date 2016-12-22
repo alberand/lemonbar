@@ -11,6 +11,7 @@ from widgets.widget import Widget
 from widgets.date import Date
 from widgets.temp import Temp
 from widgets.internet import Internet
+from widgets.ws import Workspaces
 
 class Bar:
     '''
@@ -24,7 +25,9 @@ class Bar:
         self.running = True
         self.i3 = i3ipc.Connection()
 
-        self.i3.on('window::focus', lambda i3, event: self.update())
+        # self.i3.on('workspace::focus', lambda i3, event: self.update())
+        self.i3.on('workspace::focus', lambda i3, event: print(
+            self.get_output(), file=sys.stdout))
 
         self.i3_loop = threading.Thread(target=self.i3.main)
         self.i3_loop.start()
@@ -32,17 +35,20 @@ class Bar:
         self.position_offsets = [0, 0]
 
     def run(self):
-        while self.running:
-            self.update()
+        try:
+            while self.running:
+                self.update()
 
-            # time.sleep(self.timeout)
+                time.sleep(0.1)
+        except KeyboardInterrupt:
+            print('Exiting')
 
     def update(self):
         print('Updating.', file=sys.stderr)
         print(self.get_output())
         sys.stdout.flush()
 
-        cmd = self.read_cmd()
+        # cmd = self.read_cmd()
         if cmd:
             self.process_cmd(cmd)
 
@@ -200,7 +206,7 @@ if __name__ == '__main__':
     a_wid = Internet()
     b_wid = Date()
     c_wid = Temp()
-    d_wid = Widget('d')
+    d_wid = Workspaces()
     e_wid = Widget('e')
 
     c_wid.add_action(1, 'temp')
