@@ -25,7 +25,7 @@ class Widget:
         self.id = randint(0, 100)
         print('Widget ID: {}.'.format(self.id), file=sys.stderr)
 
-        self.bg = colors['c_background']
+        self.bg = None
         self.fg = colors['c_white']
         self.icon = icons['laptop']
         self.gaps = (5, 5)

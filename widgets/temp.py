@@ -23,7 +23,7 @@ class Temp(Widget):
         Widget.__init__(self)
         self.value = value
 
-        self.bg = colors['c_background']
+        self.bg = None
         self.fg = colors['c_white']
         self.icon = icons['temp']
         self.gaps = (10, 7)
