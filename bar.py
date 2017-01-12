@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 import time
 import select 
@@ -25,9 +26,13 @@ class Bar:
         self.running = True
         self.i3 = i3ipc.Connection()
 
-        # self.i3.on('workspace::focus', lambda i3, event: self.update())
-        self.i3.on('workspace::focus', lambda i3, event: print(
-            self.get_output(), file=sys.stdout))
+        # Create new PIPE to use it in select. When events are comming we should
+        # react to them
+        r, w = os.pipe()
+        self.event_io_r, self.event_io_w = os.fdopen(r, 'r'), os.fdopen(w, 'w')
+
+        # Connect event from i3 to handler
+        self.i3.on('workspace::focus', self.i3_focus_handler)
 
         self.i3_loop = threading.Thread(target=self.i3.main)
         self.i3_loop.start()
@@ -48,20 +53,25 @@ class Bar:
         print(self.get_output())
         sys.stdout.flush()
 
-        # cmd = self.read_cmd()
+        cmd = self.read_cmd()
         if cmd:
             self.process_cmd(cmd)
 
-        sys.stdin.flush()
 
     def stop(self):
         self.running = False
+
+    def i3_focus_handler(self, i3, event):
+        self.event_io_w.write('00_focus\n') 
+        self.event_io_w.flush()
 
     def process_cmd(self, cmd):
         if not len(cmd):
             return False
 
         widget_id = cmd[0:2]
+        if widget_id == '00':
+            return None
 
         # Find widget.
         for cont in self.widgets:
@@ -74,14 +84,18 @@ class Bar:
         Check if there is something in the sys.stdin buffer. If yes read it.
         '''
         cmd = ''
-        if select.select([sys.stdin,], [], [], self.timeout)[0]:
+        event = select.select([self.event_io_r, sys.stdin], [], [], 
+                self.timeout)[0]
+        if event:
+            # Read commnad from the stream char by char
             while True:
-                char = sys.stdin.read(1)
+                char = event[0].read(1)
                 if char == '\n':
                     break
                 cmd += char
 
-            sys.stdin.flush()
+            # Not sure if there is need for this. TODO
+            event[0].flush()
 
         return cmd
 
