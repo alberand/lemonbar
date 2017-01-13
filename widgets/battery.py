@@ -25,7 +25,7 @@ class Battery(Widget):
 
         self.bg = None
         self.fg = colors['c_white']
-        self.icon = icons['battery_full']
+        self.icon = icons['battery']
         self.gaps = (10, 7)
         self.charge = 0
         self.show_text = False
@@ -50,7 +50,7 @@ class Battery(Widget):
 
         self.charge = int(percentage)
         if self.charge == 99 or self.charge == 100:
-            self.icon = icons['battery_full']
+            self.icon = icons['battery']
             self.fg = colors['c_white']
         elif self.charge < 76:
             self.icon = icons['battery_tquarter']
