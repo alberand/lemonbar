@@ -25,7 +25,7 @@ class Workspaces(Widget):
         self.bg = None
         self.fg = None
         self.icon = None
-        self.gaps = (3, 3)
+        self.gaps = (0, 0)
 
         self.colors_rules = dict()
         self.action = []
@@ -56,17 +56,13 @@ class Workspaces(Widget):
         num = ' {} '.format(num)
         return set_f_color(
                 set_b_color(
-                    set_spacing(num, (3, 3)), colors['c_black_l']
-                ), colors['c_foreground']
+                    set_spacing(num, (3, 3)), colors['c_gray']
+                ), colors['c_white']
         )
     
     def _normal_ws(self, num):
         num = ' {} '.format(num)
-        return set_f_color(
-                set_b_color(
-                    set_spacing(num, (3, 3)), colors['c_background']
-                ), colors['c_foreground']
-        )
+        return set_f_color(set_spacing(num, (3, 3)), colors['c_white'])
 
 
 
