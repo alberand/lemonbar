@@ -8,6 +8,8 @@ from widgets.config import colors, icons
 
 # TODO properties instead of GETs/SETs
 
+DEBUG = False
+
 class Widget:
     '''
     Abstrac class for all lemonbar widgets.
@@ -23,7 +25,9 @@ class Widget:
         # Temp
         self.value = value
         self.id = randint(10, 100)
-        print('Widget ID: {}.'.format(self.id), file=sys.stderr)
+
+        if DEBUG:
+            print('Widget ID: {}.'.format(self.id), file=sys.stderr)
 
         self.bg = None
         self.fg = colors['c_white']
@@ -48,7 +52,9 @@ class Widget:
         TO IMPLEMENT.
 
         '''
-        print('Widget {} executing "{}".'.format(self.id, cmd), file=sys.stderr)
+        if DEBUG:
+            print('Widget {} executing "{}".'.format(self.id, cmd), 
+                    file=sys.stderr)
 
 
     def add_action(self, button, cmd):

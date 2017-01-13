@@ -17,6 +17,8 @@ from widgets.battery import Battery
 from widgets.volume import Volume
 from widgets.bright import Bright
 
+DEBUG = False
+
 class Bar:
     '''
     Object which represent container for widget (time, date, battery, internet
@@ -54,10 +56,13 @@ class Bar:
             os.close(self.read_end)
             os.close(self.write_end)
             self.i3.main_quit()
-            print('Exiting')
+
+            if DEBUG:
+                print('Exiting', file=sys.stderr)
 
     def update(self):
-        print('Updating.', file=sys.stderr)
+        if DEBUG:
+            print('Updating.', file=sys.stderr)
         print(self.get_output())
         sys.stdout.flush()
 
