@@ -31,8 +31,9 @@ class Bar:
 
         # Create new PIPE to use it in select. When events are comming we should
         # react to them
-        r, w = os.pipe()
-        self.event_io_r, self.event_io_w = os.fdopen(r, 'r'), os.fdopen(w, 'w')
+        self.read_end, self.write_end = os.pipe()
+        self.event_io_r = os.fdopen(self.read_end, 'r')
+        self.event_io_w = os.fdopen(self.write_end, 'w')
 
         # Connect event from i3 to handler
         self.i3.on('workspace::focus', self.i3_focus_handler)
@@ -49,6 +50,10 @@ class Bar:
 
                 time.sleep(0.1)
         except KeyboardInterrupt:
+            self.stop()
+            os.close(self.read_end)
+            os.close(self.write_end)
+            self.i3.main_quit()
             print('Exiting')
 
     def update(self):
@@ -224,19 +229,19 @@ if __name__ == '__main__':
     b_wid = Date()
     c_wid = Temp()
     d_wid = Workspaces()
-    # bat_wid = Battery()
+    bat_wid = Battery()
     vol_wid = Volume()
     bri_wid = Bright()
 
     c_wid.add_action(1, 'temp')
-    # bat_wid.add_action(1, 'batt')
+    bat_wid.add_action(1, 'batt')
 
     # Add widgets to the bar
     bar.add_widget(b_wid, 'c', 0)
     bar.add_widget(d_wid, 'l', 0)
     bar.add_widget(a_wid, 'r', 0)
     bar.add_widget(c_wid, 'r', 1)
-    # bar.add_widget(bat_wid, 'r', 2)
+    bar.add_widget(bat_wid, 'r', 2)
     bar.add_widget(bri_wid, 'r', 3)
     bar.add_widget(vol_wid, 'r', 4)
 
