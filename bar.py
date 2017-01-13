@@ -13,6 +13,9 @@ from widgets.date import Date
 from widgets.temp import Temp
 from widgets.internet import Internet
 from widgets.ws import Workspaces
+from widgets.battery import Battery
+from widgets.volume import Volume
+from widgets.bright import Bright
 
 class Bar:
     '''
@@ -221,16 +224,21 @@ if __name__ == '__main__':
     b_wid = Date()
     c_wid = Temp()
     d_wid = Workspaces()
-    e_wid = Widget('e')
+    # bat_wid = Battery()
+    vol_wid = Volume()
+    bri_wid = Bright()
 
     c_wid.add_action(1, 'temp')
+    # bat_wid.add_action(1, 'batt')
 
     # Add widgets to the bar
-    bar.add_widget(a_wid, 'r', 0)
-    bar.add_widget(c_wid, 'r', 1)
-    bar.add_widget(e_wid, 'r', 2)
     bar.add_widget(b_wid, 'c', 0)
     bar.add_widget(d_wid, 'l', 0)
+    bar.add_widget(a_wid, 'r', 0)
+    bar.add_widget(c_wid, 'r', 1)
+    # bar.add_widget(bat_wid, 'r', 2)
+    bar.add_widget(bri_wid, 'r', 3)
+    bar.add_widget(vol_wid, 'r', 4)
 
     # Run mainloop
     bar.run()
