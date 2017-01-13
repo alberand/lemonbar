@@ -22,7 +22,7 @@ class Widget:
         '''
         # Temp
         self.value = value
-        self.id = randint(0, 100)
+        self.id = randint(10, 100)
         print('Widget ID: {}.'.format(self.id), file=sys.stderr)
 
         self.bg = None
