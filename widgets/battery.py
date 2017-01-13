@@ -25,7 +25,7 @@ class Battery(Widget):
 
         self.bg = None
         self.fg = colors['c_white']
-        self.icon = icons['battery']
+        self.icon = icons['battery_full']
         self.gaps = (10, 7)
         self.charge = 0
         self.show_text = False
@@ -46,11 +46,14 @@ class Battery(Widget):
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         output = process.communicate()[0]
 
-        percentage = output.decode('UTF-8')[0:2]
+        string = output.decode('UTF-8')
 
-        self.charge = int(percentage)
-        if self.charge == 99 or self.charge == 100:
-            self.icon = icons['battery']
+        self.charge = int(string[0:2])
+        if len(string) < 7:
+            self.icon = icons['plug']
+            self.fg = colors['c_white']
+        elif self.charge == 99 or self.charge == 100:
+            self.icon = icons['battery_full']
             self.fg = colors['c_white']
         elif self.charge < 76:
             self.icon = icons['battery_tquarter']

@@ -30,33 +30,34 @@ colors = {
 }
 
 icons = {
-        'bright'   : "\uf185",                      # Sun
-        'battery'  : "\uf0e7",                      # Bolt
+        'bright'    : "\uf185",                      # Sun
+        'battery'   : "\uf0e7",                      # Bolt
         'battery_empty'     : "\uf244",
         'battery_quarter'   : "\uf243",
         'battery_half'      : "\uf242",
         'battery_tquarter'  : "\uf241",
         'battery_full'      : "\uf240",
-        'clock'    : "\uf017",                      # Clock icon
-        'calendar' : "\uf073",                      # Calendar
-        'cpu'      : "\uf0e4",                      # Tachometer
-        'globe'    : "\uf0ac",                      # Globe icon
-        'home'     : "\uf015",                      # Home icon
-        'laptop'   : "\uf109",                      # Laptop icon
-        'linux'    : "\uf17c",                      # Linux (Tux) icon
-        'mail'     : "\uf0e0",                      # Email icon
-        'mem'      : "\uf0a0",                      # Memory icon
-        'music'    : "\uf001",                      # Music icon
-        'paw'      : "\uf1b0",                      # Paw icon
-        'prog'     : "\uf108",                      # Window icon
-        'shell'    : "\uf120",                      # Shell icon
-        'vol'      : "\uf028",                      # Volume icon
-        'mute'     : "\uf026",                      # Mute
-        'wsp'      : "\uf108",                      # Workspace icon 
-        'charging' : "\uf1e6",                      # Plug icon
-        'dl'       : "\uf0ab",                      # Download icon
-        'ul'       : "\uf0aa",                      # Upload icon
-        'ssid'     : "\uf1eb",                      # Wi-fi icon
-        'share'    : "\uf1e0",                      # Share icon
-	'temp'	   : "\uf06d"			    # Fire
+        'plug'      : "\uf1e6",
+        'clock'     : "\uf017",                      # Clock icon
+        'calendar'  : "\uf073",                      # Calendar
+        'cpu'       : "\uf0e4",                      # Tachometer
+        'globe'     : "\uf0ac",                      # Globe icon
+        'home'      : "\uf015",                      # Home icon
+        'laptop'    : "\uf109",                      # Laptop icon
+        'linux'     : "\uf17c",                      # Linux (Tux) icon
+        'mail'      : "\uf0e0",                      # Email icon
+        'mem'       : "\uf0a0",                      # Memory icon
+        'music'     : "\uf001",                      # Music icon
+        'paw'       : "\uf1b0",                      # Paw icon
+        'prog'      : "\uf108",                      # Window icon
+        'shell'     : "\uf120",                      # Shell icon
+        'vol'       : "\uf028",                      # Volume icon
+        'mute'      : "\uf026",                      # Mute
+        'wsp'       : "\uf108",                      # Workspace icon 
+        'charging'  : "\uf1e6",                      # Plug icon
+        'dl'        : "\uf0ab",                      # Download icon
+        'ul'        : "\uf0aa",                      # Upload icon
+        'ssid'      : "\uf1eb",                      # Wi-fi icon
+        'share'     : "\uf1e0",                      # Share icon
+	'temp'	    : "\uf06d"			    # Fire
 }
