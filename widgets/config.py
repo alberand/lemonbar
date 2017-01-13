@@ -32,6 +32,11 @@ colors = {
 icons = {
         'bright'   : "\uf185",                      # Sun
         'battery'  : "\uf0e7",                      # Bolt
+        'battery_empty'     : "\uf244",
+        'battery_quarter'   : "\uf243",
+        'battery_half'      : "\uf242",
+        'battery_tquarter'  : "\uf241",
+        'battery_full'      : "\uf240",
         'clock'    : "\uf017",                      # Clock icon
         'calendar' : "\uf073",                      # Calendar
         'cpu'      : "\uf0e4",                      # Tachometer
