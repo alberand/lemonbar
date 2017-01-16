@@ -25,7 +25,7 @@ class Temp(Widget):
 
         self.bg = None
         self.fg = colors['c_white']
-        self.icon = icons['temp']
+        self.icon = icons['thermometer_half']
         self.gaps = (10, 7)
         self.temp = 0
         self.show_text = False
@@ -52,10 +52,13 @@ class Temp(Widget):
         self.temp = float(raw_value[1:5])
         if self.temp < 70:
             self.fg = colors['c_white']
+            self.icon = icons['thermometer_tquarter']
         elif self.temp < 90:
             self.fg = colors['c_red_l']
+            self.icon = icons['thermometer_full']
         else:
             self.fg = colors['c_white']
+            self.icon = icons['thermometer_half']
 
         if self.show_text:
             self.value = self.temp
@@ -64,7 +67,6 @@ class Temp(Widget):
             self.value = ''
 
     def execute(self, cmd):
-        print('Widget {} executing "{}".'.format(self.id, cmd), file=sys.stderr)
         if cmd == 'temp':
             self.show_text = True
 

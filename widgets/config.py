@@ -37,6 +37,11 @@ icons = {
         'battery_half'      : "\uf242",
         'battery_tquarter'  : "\uf241",
         'battery_full'      : "\uf240",
+        'thermometer_empty'     : "\uf2cb",
+        'thermometer_quarter'   : "\uf2ca",
+        'thermometer_half'      : "\uf2c9",
+        'thermometer_tquarter'  : "\uf2c8",
+        'thermometer_full'      : "\uf2c7",
         'plug'      : "\uf1e6",
         'clock'     : "\uf017",                      # Clock icon
         'calendar'  : "\uf073",                      # Calendar
