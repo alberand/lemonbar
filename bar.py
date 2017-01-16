@@ -245,8 +245,8 @@ if __name__ == '__main__':
     bar.add_widget(b_wid, 'c', 0)
     bar.add_widget(d_wid, 'l', 0)
     bar.add_widget(a_wid, 'r', 0)
-    bar.add_widget(c_wid, 'r', 1)
-    bar.add_widget(bat_wid, 'r', 2)
+    bar.add_widget(bat_wid, 'r', 1)
+    bar.add_widget(c_wid, 'r', 2)
     bar.add_widget(bri_wid, 'r', 3)
     bar.add_widget(vol_wid, 'r', 4)
 
