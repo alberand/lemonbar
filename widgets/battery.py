@@ -49,7 +49,7 @@ class Battery(Widget):
         string = output.decode('UTF-8')
 
         self.charge = int(string[0:2])
-        if len(string) < 7:
+        if len(string) < 7 or string[-3:] == 'CHR':
             self.icon = icons['plug']
             self.fg = colors['c_white']
         elif self.charge == 99 or self.charge == 100:
