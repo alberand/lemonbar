@@ -27,3 +27,5 @@ wait $python_pid
 trap - TERM INT
 wait $python_pid
 EXIT_STATUS=$?
+
+rm  p_to_lb lb_to_p
