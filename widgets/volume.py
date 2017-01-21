@@ -43,6 +43,20 @@ class Volume(Widget):
         result = re.search('\[\d*%\]', str(output))
         self.value = result.group()[1:-1]
 
+    def execute(self, cmd):
+        if not cmd:
+            return None
+
+        if cmd == 'vol_up':
+            cmd = 'amixer -c 1 set Master 5%+'
+            subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
+        elif cmd == 'vol_down':
+            cmd = 'amixer -c 1 set Master 5%-'
+            subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
+        else:
+            print('Volume: incorrect command.', file=sys.stderr)
+
+
 if __name__ == '__main__':
     # a = Widget('a')
     # a.add_action(3, 'date')

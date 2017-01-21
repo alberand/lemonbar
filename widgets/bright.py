@@ -41,6 +41,19 @@ class Bright(Widget):
         br = int(int(brightness)*100/int(maximum))
         self.value = br
 
+    def execute(self, cmd):
+        if not cmd:
+            return None
+
+        if cmd == 'bright_up':
+            cmd = 'xbacklight -inc 10'
+            subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
+        elif cmd == 'bright_down':
+            cmd = 'xbacklight -dec 10'
+            subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
+        else:
+            print('Bright: incorrect command.', file=sys.stderr)
+
 
 if __name__ == '__main__':
     # a = Widget('a')
