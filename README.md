@@ -10,3 +10,9 @@ Run:
 ```
 ./run.sh
 ```
+
+TODO
+===============================================================================
+* Integration with google-calendar. When event is coming date widget change its
+  color and send notification via notify-send.
+* Scrolling on the brightness and sound
