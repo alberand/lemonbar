@@ -49,8 +49,6 @@ class Bar:
         try:
             while self.running:
                 self.update()
-
-                time.sleep(0.1)
         except KeyboardInterrupt:
             self.stop()
             os.close(self.read_end)
@@ -69,6 +67,9 @@ class Bar:
         cmd = self.read_cmd()
         if cmd:
             self.process_cmd(cmd)
+
+        sys.stdin.flush()
+        self.event_io_r.flush()
 
 
     def stop(self):
@@ -90,7 +91,7 @@ class Bar:
         for cont in self.widgets:
             if cont['id'] == int(widget_id):
                 cont['widget'].execute(cmd[3:])
-        # print('cmd "{}" executed'.format(cmd), file=sys.stderr)
+        print('cmd "{}" executed'.format(cmd), file=sys.stderr)
 
     def read_cmd(self):
         '''
@@ -108,7 +109,7 @@ class Bar:
                 cmd += char
 
             # Not sure if there is need for this. TODO
-            event[0].flush()
+            # event[0].flush()
 
         return cmd
 
@@ -240,6 +241,10 @@ if __name__ == '__main__':
 
     c_wid.add_action(1, 'temp')
     bat_wid.add_action(1, 'batt')
+    vol_wid.add_action(4, 'vol_up')
+    vol_wid.add_action(5, 'vol_down')
+    bri_wid.add_action(4, 'bright_up')
+    bri_wid.add_action(5, 'bright_down')
 
     # Add widgets to the bar
     bar.add_widget(b_wid, 'c', 0)
