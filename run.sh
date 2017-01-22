@@ -5,6 +5,7 @@
 # file. STDOUT of lemonbar is also connected to python script to generate
 # responses for the mouse commands.
 #==============================================================================
+DIRECTORY="$( cd "$( dirname "$0" )" && pwd )"
 
 # Create FIFO files to communicate between processes
 [[ -r p_to_lb ]] || mkfifo p_to_lb
@@ -12,7 +13,7 @@
 
 trap 'kill -TERM $python_pid' TERM INT
 # Run python script
-python ./bar.py > p_to_lb < lb_to_p &
+python $DIRECTORY/bar.py > p_to_lb < lb_to_p &
 python_pid=$!
 
 echo "PID of python process: $python_pid"
