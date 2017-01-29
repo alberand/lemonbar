@@ -15,5 +15,5 @@ TODO
 ===============================================================================
 * Integration with google-calendar. When event is coming date widget change its
   color and send notification via notify-send.
-* Scrolling on the brightness and sound
 * Short-cuts. We are in keyboard-oriented environment.
+* Configuration file and parser
