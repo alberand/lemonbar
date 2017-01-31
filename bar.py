@@ -5,17 +5,11 @@ import sys
 import time
 import select 
 import threading 
+import configparser
 
 import i3ipc
 
-from widgets.widget import Widget
-from widgets.date import Date
-from widgets.temp import Temp
-from widgets.internet import Internet
-from widgets.ws import Workspaces
-from widgets.battery import Battery
-from widgets.volume import Volume
-from widgets.bright import Bright
+from widgets import *
 
 DEBUG = False
 
@@ -162,7 +156,7 @@ class Bar:
             return None
 
     def find_last_position(self, pos, align):
-        if not align in ['l', 'c', 'r']:
+        if not align in ['LEFT', 'CENTER', 'RIGHT']:
             return None
 
         for cont in self.widgets:
@@ -171,18 +165,18 @@ class Bar:
             else:
                 return cont['position'] + pos
 
-        return self.position_offsets[0] if align == 'c' else self.position_offsets[1]
+        return self.position_offsets[0] if align == 'CENTER' else self.position_offsets[1]
 
     def add_widget(self, widget, align=None, pos=None):
         '''
         Args:
             widget: widget.Widget instance
             pos: position of the widget in the align position. 
-            align: order id of the widget. 'l' - left, 'c' - center, 'r' - right
+            align: order id of the widget.
         '''
         # Check align
-        if not align or not align in ['l', 'c', 'r']:
-            align = 'r'
+        if not align or not align in ['LEFT', 'CENTER', 'RIGHT']:
+            align = 'RIGHT'
 
         # Check position
         if pos == None:
@@ -192,14 +186,14 @@ class Bar:
         else:
             pos = self.find_last_position(pos, align)
 
-        self.position_offsets[0 if align == 'c' else 1] += 1
+        self.position_offsets[0 if align == 'CENTER' else 1] += 1
 
         cont = self.gen_widget_container(widget, pos, align)
         self.widgets.insert(pos, cont)
 
     def remove_widget(self, widget):
         # TODO update widgets order
-        self.position_offsets[0 if align == 'c' else 1] -= 1
+        self.position_offsets[0 if align == 'CENTER' else 1] -= 1
 
         self.widgets.remove(widget)
 
@@ -210,50 +204,51 @@ class Bar:
     def get_output(self):
         container = '%{{l}}{0} %{{c}}{1} %{{r}}{2}'
         arranged_items = {
-                'l': [],
-                'c': [],
-                'r': []
+                'LEFT': [],
+                'CENTER': [],
+                'RIGHT': []
         }
 
         for cont in self.widgets:
             arranged_items[cont['align']].append(cont['widget'].get_output())
 
         result = container.format(
-                ''.join(arranged_items['l']), 
-                ''.join(arranged_items['c']),
-                ''.join(arranged_items['r']))
+                ''.join(arranged_items['LEFT']), 
+                ''.join(arranged_items['CENTER']),
+                ''.join(arranged_items['RIGHT']))
 
         return result
 
+def add_widgets(widgets_list, position, bar):
+    for widget in widgets_list:
+        bar.add_widget(widget, position, 0)
+
+
 if __name__ == '__main__':
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+
     # Init the bar
     bar = Bar()
-    bar.set_timeout(2)
+    bar.set_timeout(config['BAR'].getint('timeout'))
 
-    # Create widgets
-    a_wid = Internet()
-    b_wid = Date()
-    c_wid = Temp()
-    d_wid = Workspaces()
-    bat_wid = Battery()
-    vol_wid = Volume()
-    bri_wid = Bright()
-
-    c_wid.add_action(1, 'temp')
-    bat_wid.add_action(1, 'batt')
-    vol_wid.add_action(4, 'vol_up')
-    vol_wid.add_action(5, 'vol_down')
-    bri_wid.add_action(4, 'bright_up')
-    bri_wid.add_action(5, 'bright_down')
-
-    # Add widgets to the bar
-    bar.add_widget(b_wid, 'c', 0)
-    bar.add_widget(d_wid, 'l', 0)
-    bar.add_widget(a_wid, 'r', 0)
-    bar.add_widget(bat_wid, 'r', 1)
-    bar.add_widget(c_wid, 'r', 2)
-    bar.add_widget(bri_wid, 'r', 3)
-    bar.add_widget(vol_wid, 'r', 4)
+    # Add widgets
+    for pos in ['LEFT', 'CENTER', 'RIGHT']:
+        widgets_obj = list()
+        # Make first letter upper case to hold pythonic class name style
+        widgets_names = list(config[pos].keys())[::-1]
+        for widget_name in widgets_names:
+            # Convert widget to an object and add it to the list
+            widget = getattr(globals()[widget_name], widget_name)()
+            # Add actions if exists
+            actions = [item for item in config[pos][widget_name].split(' ') if
+                    item]
+            if actions:
+                for action in actions:
+                    widget.add_action(config[action]['button'],
+                                      config[action]['command'])
+            widgets_obj.append(widget)
+        add_widgets(widgets_obj, pos, bar)
 
     # Run mainloop
     bar.run()
