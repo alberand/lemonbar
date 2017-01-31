@@ -8,7 +8,7 @@ from utils import set_b_color, set_f_color, set_spacing
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
-class Workspaces(Widget):
+class ws(Widget):
     '''
     '''
 

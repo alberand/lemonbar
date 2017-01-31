@@ -9,7 +9,7 @@ import subprocess
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
-class Battery(Widget):
+class battery(Widget):
     '''
     '''
 
@@ -78,7 +78,7 @@ class Battery(Widget):
             self.value = ''
 
     def execute(self, cmd):
-        if cmd == 'batt':
+        if cmd == 'show':
             self.show_text = True
 
 if __name__ == '__main__':

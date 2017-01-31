@@ -5,7 +5,7 @@ import datetime
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
-class Date(Widget):
+class date(Widget):
     '''
     Abstrac class for all lemonbar widgets.
     '''

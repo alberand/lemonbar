@@ -5,7 +5,7 @@ import subprocess
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
-class Internet(Widget):
+class internet(Widget):
     '''
     Abstrac class for all lemonbar widgets.
     '''

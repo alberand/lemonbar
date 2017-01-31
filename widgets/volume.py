@@ -6,7 +6,7 @@ import subprocess
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
-class Volume(Widget):
+class volume(Widget):
     '''
     Abstrac class for all lemonbar widgets.
     '''
@@ -47,10 +47,10 @@ class Volume(Widget):
         if not cmd:
             return None
 
-        if cmd == 'vol_up':
+        if cmd == 'scrl_up':
             cmd = 'amixer -c 1 set Master 5%+'
             subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
-        elif cmd == 'vol_down':
+        elif cmd == 'scrl_down':
             cmd = 'amixer -c 1 set Master 5%-'
             subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
         else:

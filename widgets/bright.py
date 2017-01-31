@@ -5,7 +5,7 @@ import subprocess
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
-class Bright(Widget):
+class bright(Widget):
     '''
     '''
 
@@ -45,10 +45,10 @@ class Bright(Widget):
         if not cmd:
             return None
 
-        if cmd == 'bright_up':
+        if cmd == 'scrl_up':
             cmd = 'xbacklight -inc 10'
             subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
-        elif cmd == 'bright_down':
+        elif cmd == 'scrl_down':
             cmd = 'xbacklight -dec 10'
             subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
         else:

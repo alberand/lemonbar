@@ -8,7 +8,7 @@ import subprocess
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
-class Temp(Widget):
+class temp(Widget):
     '''
     Abstrac class for all lemonbar widgets.
     '''
@@ -67,7 +67,7 @@ class Temp(Widget):
             self.value = ''
 
     def execute(self, cmd):
-        if cmd == 'temp':
+        if cmd == 'show':
             self.show_text = True
 
 if __name__ == '__main__':
