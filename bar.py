@@ -3,6 +3,7 @@
 import os
 import sys
 import time
+import json
 import select 
 import threading 
 import configparser
@@ -237,22 +238,23 @@ if __name__ == '__main__':
     for pos in ['LEFT', 'CENTER', 'RIGHT']:
         widgets_obj = list()
         # Make first letter upper case to hold pythonic class name style
-        widgets_names = list(config[pos].keys())[::-1]
+        widgets_names = list(config[pos]['widgets'].split(', ')[::-1])
         for widget_name in widgets_names:
             # Convert widget to an object and add it to the list
             widget = getattr(globals()[widget_name], widget_name)()
             # Add actions if exists
-            actions = [item for item in config[pos][widget_name].split(' ') if
-                    item]
-            if actions:
-                for action in actions:
-                    if DEBUG:
-                        print('btn: {}, act: {}.'.format(
-                                config[action]['button'],
-                                config[action]['command']
-                            ), file=sys.stderr)
-                    widget.add_action(int(config[action]['button']),
-                                      config[action]['command'])
+            if widget_name in config.sections():
+                actions = [item for item in 
+                        config[widget_name]['actions'].split(', ') if item]
+                if actions:
+                    for action in actions:
+                        if DEBUG:
+                            print('btn: {}, act: {}.'.format(
+                                    config[action]['button'],
+                                    config[action]['command']
+                                ), file=sys.stderr)
+                        widget.add_action(int(config[action]['button']),
+                                    config[action]['command'])
             widgets_obj.append(widget)
         add_widgets(widgets_obj, pos, bar)
 
