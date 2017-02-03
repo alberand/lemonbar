@@ -30,16 +30,7 @@ class temp(Widget):
         self.temp = 0
         self.show_text = False
 
-        self.colors_rules = dict()
-        self.action = []
-        self.action_buttons = []
-
     def update(self):
-        '''
-
-        TO IMPLEMENT.
-
-        '''
         cmd = 'sensors coretemp-isa-0000'
 
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
@@ -69,8 +60,3 @@ class temp(Widget):
     def execute(self, cmd):
         if cmd == 'show':
             self.show_text = True
-
-if __name__ == '__main__':
-    a = Widget()
-
-    print(a.get_output())

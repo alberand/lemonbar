@@ -2,6 +2,7 @@
 
 import sys
 import datetime
+
 from widgets.widget import Widget
 from widgets.config import colors, icons
 
@@ -24,10 +25,6 @@ class date(Widget):
         self.fg = colors['c_white']
         self.icon = icons['clock']
 
-        self.colors_rules = dict()
-        self.action = []
-        self.action_buttons = []
-
     def update(self):
         '''
 
@@ -37,12 +34,3 @@ class date(Widget):
         date = datetime.datetime.now()
 
         self.value = date.strftime('%a %d.%m.%y %H:%M %p')
-
-if __name__ == '__main__':
-    # a = Widget('a')
-    # a.add_action(3, 'date')
-    # a.add_action(1, 'time')
-
-    a = Widget()
-
-    print(a.get_output())

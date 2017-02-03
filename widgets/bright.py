@@ -23,16 +23,7 @@ class bright(Widget):
         self.fg = colors['c_white']
         self.icon = icons['bright']
 
-        self.colors_rules = dict()
-        self.action = []
-        self.action_buttons = []
-
     def update(self):
-        '''
-
-        TO IMPLEMENT.
-
-        '''
         with open('/sys/class/backlight/intel_backlight/brightness') as br:
             brightness = br.readlines()[0].strip()
         with open('/sys/class/backlight/intel_backlight/max_brightness') as mx:
@@ -53,13 +44,3 @@ class bright(Widget):
             subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
         else:
             print('Bright: incorrect command.', file=sys.stderr)
-
-
-if __name__ == '__main__':
-    # a = Widget('a')
-    # a.add_action(3, 'date')
-    # a.add_action(1, 'time')
-
-    a = Widget()
-
-    print(a.get_output())

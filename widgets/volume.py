@@ -25,10 +25,6 @@ class volume(Widget):
         self.fg = colors['c_white']
         self.icon = icons['vol']
 
-        self.colors_rules = dict()
-        self.action = []
-        self.action_buttons = []
-
     def update(self):
         '''
 
@@ -55,13 +51,3 @@ class volume(Widget):
             subprocess.call(cmd.split(' '), stdout=subprocess.PIPE)
         else:
             print('Volume: incorrect command.', file=sys.stderr)
-
-
-if __name__ == '__main__':
-    # a = Widget('a')
-    # a.add_action(3, 'date')
-    # a.add_action(1, 'time')
-
-    a = Widget()
-
-    print(a.get_output())

@@ -27,10 +27,6 @@ class ws(Widget):
         self.icon = None
         self.gaps = (0, 0)
 
-        self.colors_rules = dict()
-        self.action = []
-        self.action_buttons = []
-
     def update(self):
         # Get information about workspace situations
         cmd = 'i3-msg -t get_workspaces'
@@ -63,10 +59,3 @@ class ws(Widget):
     def _normal_ws(self, num):
         num = ' {} '.format(num)
         return set_f_color(set_spacing(num, (3, 3)), colors['c_white'])
-
-
-
-if __name__ == '__main__':
-    a = Widget()
-
-    print(a.get_output())

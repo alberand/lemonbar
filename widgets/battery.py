@@ -73,8 +73,3 @@ class battery(Widget):
     def execute(self, cmd):
         if cmd == 'show':
             self.show_text = True
-
-if __name__ == '__main__':
-    a = Widget()
-
-    print(a.get_output())
