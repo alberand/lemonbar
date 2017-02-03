@@ -30,15 +30,8 @@ class battery(Widget):
         self.charge = 0
         self.show_text = False
 
-        self.colors_rules = dict()
-        self.action = []
-        self.action_buttons = []
-
     def update(self):
         '''
-
-        TO IMPLEMENT.
-
         '''
         cmd = '/'.join(os.path.realpath(__file__).split('/')[:-1]) + \
                 '/utils/battery'

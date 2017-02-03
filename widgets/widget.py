@@ -79,6 +79,9 @@ class Widget:
         self.action.remove(cmd)
 
     def set_action(self, string, action, button):
+        if DEBUG:
+            print('Setting action btn: {}, act: {}'.format(button, action),
+                    file=sys.stderr)
         return '%{{A{1}:{2}:}}{0}%{{A}}'.format(string, button, action)
 
     def set_bg(self, string):

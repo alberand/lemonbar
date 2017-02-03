@@ -85,7 +85,8 @@ class Bar:
         for cont in self.widgets:
             if cont['id'] == int(widget_id):
                 cont['widget'].execute(cmd[3:])
-        print('cmd "{}" executed'.format(cmd), file=sys.stderr)
+        if DEBUG:
+            print('cmd "{}" executed'.format(cmd), file=sys.stderr)
 
     def read_cmd(self):
         '''
@@ -245,7 +246,12 @@ if __name__ == '__main__':
                     item]
             if actions:
                 for action in actions:
-                    widget.add_action(config[action]['button'],
+                    if DEBUG:
+                        print('btn: {}, act: {}.'.format(
+                                config[action]['button'],
+                                config[action]['command']
+                            ), file=sys.stderr)
+                    widget.add_action(int(config[action]['button']),
                                       config[action]['command'])
             widgets_obj.append(widget)
         add_widgets(widgets_obj, pos, bar)

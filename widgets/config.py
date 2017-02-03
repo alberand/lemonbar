@@ -42,6 +42,7 @@ icons = {
         'thermometer_half'      : "\uf2c9",
         'thermometer_tquarter'  : "\uf2c8",
         'thermometer_full'      : "\uf2c7",
+        'dropbox'               : "\uf16b",
         'plug'      : "\uf1e6",
         'clock'     : "\uf017",                      # Clock icon
         'calendar'  : "\uf073",                      # Calendar
