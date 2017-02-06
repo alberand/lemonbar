@@ -228,7 +228,7 @@ def add_widgets(widgets_list, position, bar):
 
 if __name__ == '__main__':
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('/home/andrew/Projects/lemonbar/config.ini')
 
     # Init the bar
     bar = Bar()
