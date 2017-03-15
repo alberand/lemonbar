@@ -48,18 +48,18 @@ class battery(Widget):
         elif self.charge == 99 or self.charge == 100:
             self.icon = icons['battery_full']
             self.fg = colors['c_white']
-        elif self.charge < 76:
-            self.icon = icons['battery_tquarter']
-            self.fg = colors['c_white']
-        elif self.charge < 51:
-            self.icon = icons['battery_half']
-            self.fg = colors['c_white']
-        elif self.charge < 26:
-            self.icon = icons['battery_quarter']
-            self.fg = colors['c_yellow_d']
         elif self.charge < 10:
             self.icon = icons['battery_empty']
             self.fg = colors['c_red_l']
+        elif self.charge < 26:
+            self.icon = icons['battery_quarter']
+            self.fg = colors['c_yellow_d']
+        elif self.charge < 51:
+            self.icon = icons['battery_half']
+            self.fg = colors['c_white']
+        elif self.charge < 76:
+            self.icon = icons['battery_tquarter']
+            self.fg = colors['c_white']
         else:
             self.icon = icons['battery_full']
             self.fg = colors['c_white']
