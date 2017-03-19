@@ -1,6 +1,11 @@
-Lemonbar Python generator
-===============================================================================
-This application written to simplify string generation for lemonbar.
+# Lemonbar Python generator
+This application written to simplify string generation for lemonbar. It's python
+little program to generate system information report (internet status, battery
+charge, brightness of the display etc.). 
+
+By running this program you will see formatted message periodically printed to
+the standard output. Connecting it to lemonbar (for example by pipeline | on
+unix systems) will result in system status bar. 
 
 There is also shell script which create two temporarily FIFO queue to connect
 lemonbar output to application input and vice versa. It's run both applications
@@ -10,8 +15,7 @@ Run:
 ```
 ./run.sh
 ```
-Widgets
-===============================================================================
+# Widgets
 Bar is delivered with a few basics widgets such as workspaces, date and time,
 internet, power, processor temperature, brightness and volume. You can add
 custom widgets by creating widget class in **widgets** catalog. 
@@ -31,9 +35,12 @@ List of currently available widgets can be found in _widgets_ directory.
 Possibly they will need to be change for you system. All those scripts were
 written for usage on Arch Linux.
 
-TODO
-===============================================================================
+# TODO
 * Integration with google-calendar. When event is coming date widget change its
   color and send notification via notify-send.
 * Short-cuts. We are in keyboard-oriented environment.
 * For i3 implement root password asking dialog to run sudo scripts.
+
+# References
+- [Lemonbar Github](https://github.com/LemonBoy/bar)
+- [i3 windows manager](https://i3wm.org/)
