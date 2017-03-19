@@ -27,9 +27,13 @@ example widgets to better understand how to write you own.
 After creating widget you need to add it into configuration file, by default it
 is **config.ini**.
 
+List of currently available widgets can be found in _widgets_ directory.
+Possibly they will need to be change for you system. All those scripts were
+written for usage on Arch Linux.
+
 TODO
 ===============================================================================
 * Integration with google-calendar. When event is coming date widget change its
   color and send notification via notify-send.
 * Short-cuts. We are in keyboard-oriented environment.
-* Configuration file and parser
+* For i3 implement root password asking dialog to run sudo scripts.
