@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import subprocess
 from widgets.widget import Widget
 from widgets.config import colors, icons
@@ -30,7 +31,7 @@ class internet(Widget):
 
         comp = subprocess.run(cmd.split(), stdout=subprocess.PIPE)
 
-        if comp:
+        if comp.returncode == 0:
             self.fg = colors['c_green_l']
         else:
             self.fg = colors['c_red_l']

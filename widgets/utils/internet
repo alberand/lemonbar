@@ -2,16 +2,22 @@
 
 flag=0
 
-ips=( 8.8.8.8 208.67.222.222 208.67.220.220 )
+# ips=( 8.8.8.8 208.67.222.222 208.67.220.220 )
 
-for i in "${ips[@]}"
-do
-    echo "pinging: $i."
-    ping -W 1 -c 3 $i > /dev/null
-    if [[ "$?" -ne "0" ]]; then
-        echo "Fail to ping to $i."
-        flag=1
-    fi
-done
+# for i in "${ips[@]}"
+# do
+    # echo "pinging: $i."
+    # ping -W 1 -c 3 $i > /dev/null
+    # if [[ "$?" -ne "0" ]]; then
+        # echo "Fail to ping to $i."
+        # flag=1
+    # fi
+# done
 
-echo $flag
+IP_ADDRESS=$(ip route | grep "default" | grep "linkdown")
+
+if [[ "${IP_ADDRESS}" != "" ]]; then
+    flag=1
+fi
+
+exit $flag
