@@ -26,7 +26,8 @@ colors = {
         'c_white_l'	: "#fffbf1c7",
         'c_black_l'     : "#ff665c54",
         'c_white'       : "#ffffffff",
-        'c_gray'        : "#44DDDDDD"
+        'c_gray'        : "#44DDDDDD",
+        'c_gray_l'      : "#ffafafaf"
 }
 
 icons = {
