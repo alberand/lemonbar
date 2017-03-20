@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import re
 import sys
 import datetime
@@ -23,14 +24,27 @@ class WiFiHS(Widget):
         self.value = value
 
         self.bg = None
-        self.fg = None
+        self.fg = colors['c_gray_l']
         self.icon = icons['ssid']
         self.gaps = (10, 7)
         self.show_text = False
 
+    def update(self):
+        cmd = ['pidof', 'hostapd']
+
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+        output = process.communicate()[0]
+
+        if output:
+            self.fg = None
+        else:
+            self.fg = colors['c_gray_l']
+
     def execute(self, cmd):
         if cmd == 'show':
-            cmd = ['/home/andrew/.scripts/wifi_hotspot.sh']
+            cmd = ['/'.join(os.path.realpath(__file__).split('/')[:-1]) + \
+                '/utils/floating_term.sh',
+                '/home/andrew/.scripts/wifi_hotspot.sh']
 
             process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
             output = process.communicate()[0]
